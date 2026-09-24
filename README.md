@@ -1,352 +1,260 @@
-# HireFlow AI
+# <p align="center">🚀 HireFlow AI</p>
 
-**AI-Powered Campus Placement Management and Preparation Platform**
+<p align="center">
+  <strong>Intelligent Campus Placement Management & Adaptive AI Preparation Platform</strong>
+</p>
 
-> Built with React, AWS Lambda, Amazon API Gateway, Amazon RDS MySQL, and Amazon Comprehend
+<p align="center">
+  <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React 19" /></a>
+  <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/Vite-6.0-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 6" /></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.12" /></a>
+  <a href="https://aws.amazon.com/lambda/"><img src="https://img.shields.io/badge/AWS_Lambda-Serverless-FF9900?style=for-the-badge&logo=awslambda&logoColor=white" alt="AWS Lambda" /></a>
+  <a href="https://aws.amazon.com/comprehend/"><img src="https://img.shields.io/badge/Amazon_Comprehend-NLP-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white" alt="Amazon Comprehend" /></a>
+  <a href="https://aws.amazon.com/rds/"><img src="https://img.shields.io/badge/Amazon_RDS-MySQL_8-527FFF?style=for-the-badge&logo=mysql&logoColor=white" alt="Amazon RDS" /></a>
+</p>
 
----
-
-## Problem Statement
-
-Campus placement is a high-stakes process for engineering students. Students often struggle with:
-
-- **Tracking multiple placement drives** across companies with different deadlines, requirements, and stages
-- **Understanding their resume-to-job alignment** without objective, data-driven feedback
-- **Preparing for placement interviews** without personalized guidance based on their actual skill gaps
-- **Managing applications** and knowing where they stand in each pipeline
-
-HireFlow AI addresses these challenges by providing a unified student-side platform that combines placement drive tracking, NLP-powered resume analysis, and adaptive preparation — all connected to a live AWS serverless backend.
-
----
-
-## Features
-
-### Student Authentication
-- Secure login with PBKDF2-SHA256 password hashing (100,000 iterations)
-- Session token stored in RDS MySQL `sessions` table
-- Bearer token authorization on all protected API calls
-- Session restoration on page reload via `GET /auth/me`
-- Protected routes with automatic redirect to login
-
-### Student Dashboard
-- Personalized welcome with authenticated student profile
-- Real-time statistics: total applications, active applications, selections, ATS score
-- Upcoming placement drives sorted by deadline
-- Recent application activity feed
-- Quick navigation actions
-
-### Placement Drives
-- Browse all active drives fetched from RDS MySQL
-- Search by company name, role, or required skills
-- Filter by company, minimum package, and sort order
-- View detailed drive information (eligibility, rounds, description)
-- Add new placement drives with automatic company creation
-- Apply to drives with server-side duplicate prevention
-
-### Application Pipeline
-- Track application status through 6 stages:
-  Application → Resume Screening → Aptitude → Technical → HR → Final Result
-- Visual pipeline indicator for each application
-- Status tracking: Pending Review, In Progress, Selected, Rejected
-
-### Resume Analyzer (Amazon Comprehend NLP)
-- Upload resume in PDF, DOCX, or TXT format (client-side extraction)
-- Upload or paste job description
-- Automatic company name and role detection from JD text
-- Backend NLP analysis via Amazon Comprehend:
-  - Key phrase extraction from both resume and job description
-  - Named entity detection (organizations, titles, skills)
-- Application-level skill matching with controlled vocabulary (80+ technical skills)
-- Multi-factor ATS scoring:
-  - 60% Skill Match Score
-  - 25% Key Phrase Relevance Score
-  - 15% Entity Relevance Score
-- Matched skills, missing skills, and actionable recommendations
-
-### Adaptive Placement Preparation
-- Context-aware preparation engine powered by:
-  - RDS placement drive data (company, role, required skills)
-  - Live application stage tracking
-  - Amazon Comprehend resume gap signals
-- Curated question bank (50+ questions) across:
-  - Technical (Python, SQL, AWS, DSA, React, Docker, etc.)
-  - Aptitude (quantitative, logical reasoning)
-  - HR and Behavioral (STAR method)
-  - Company and Role (contextual questions)
-- Question prioritization: resume gap skills first, then required skills, then core CS
-- Readiness score with transparent deterministic formula
-- Supports both College Drive mode and Custom JD mode
-- Graceful offline fallback with explicit indicator
-
-### Custom JD Flow
-- Upload any job description (not just college drives)
-- Auto-detect company name and role from JD text
-- Full resume analysis against custom JD
-- Seamless transition to custom preparation mode
-- Context preservation across navigation via sessionStorage
+<p align="center">
+  <a href="#-why-hireflow-ai">Why HireFlow AI</a> •
+  <a href="#-core-features">Core Features</a> •
+  <a href="#-system-architecture">Architecture</a> •
+  <a href="#-how-the-ai-engine-works">AI & ATS Engine</a> •
+  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-project-roadmap">Roadmap</a>
+</p>
 
 ---
 
-## Technology Stack
+## 💡 Why HireFlow AI?
 
-### Frontend
-| Technology | Purpose |
-|-----------|---------|
-| React 19 | UI framework |
-| Vite 8 | Build tool and dev server |
-| React Router DOM 7 | Client-side routing |
-| pdfjs-dist | Client-side PDF text extraction |
-| mammoth | Client-side DOCX text extraction |
-| Vanilla CSS | Styling with CSS custom properties |
+Campus placement drives are fast-paced and overwhelming. Engineering students are often forced to juggle fragmented spreadsheets, blind resume submissions, and generic preparation with zero visibility into why they get screened out.
 
-### Backend
-| Technology | Purpose |
-|-----------|---------|
-| Python 3.12 | Lambda runtime |
-| PyMySQL | MySQL database driver |
-| boto3 | AWS SDK for Python |
-
-### AWS Services (Confirmed in Codebase)
-| Service | Purpose |
-|---------|---------|
-| Amazon API Gateway | HTTP API routing to Lambda functions |
-| AWS Lambda | Two serverless functions (main + resume analyzer) |
-| Amazon RDS MySQL | Relational database (companies, students, drives, applications, sessions) |
-| Amazon Comprehend | Managed NLP (key phrase and entity extraction) |
-| AWS IAM | Lambda execution roles and Comprehend permissions |
-| Amazon CloudWatch | Application logging |
-
-### Primary AWS Region
-`ap-south-1` (Mumbai)
+| ❌ The Old Way (Manual & Fragmented) | ✅ The HireFlow AI Way |
+|:-------------------------------------|:-----------------------|
+| 📁 Disorganized drive tracking across email & WhatsApp | 🎯 **Centralized Drive Hub** with real-time deadline filters & 1-click apply |
+| ❓ Blind applications with unknown ATS match score | 🤖 **Comprehend NLP Resume Screening** with instant gap analysis |
+| 📚 Generic, unpersonalized interview preparation | ⚡ **Adaptive Question Engine** tailored to current stage & detected skill gaps |
+| 🤷 No clarity on application stages & feedback | 📊 **Visual 6-Stage Pipeline** tracking status from application to final offer |
 
 ---
 
-## System Architecture
+## ⚡ Core Features
 
-```
-React/Vite SPA (Browser)
-    |
-    | HTTPS + Bearer Token
-    v
-Amazon API Gateway (HTTP API)
-    |
-    |-- /auth/*, /drives, /applications, /preparation
-    |       |
-    |       v
-    |   hireflow-main Lambda (Python 3.12)
-    |       |
-    |       v
-    |   Amazon RDS MySQL (hireflow database)
-    |
-    |-- /resume/analyze
-            |
-            v
-        hireflow-resume-analyzer Lambda (Python 3.12)
-            |
-            v
-        Amazon Comprehend (detect_key_phrases, detect_entities)
+<div align="center">
+
+| 🎓 Placement Drive Hub | 📄 AI Resume Analyzer |
+|:---|:---|
+| • Live drive directory powered by **Amazon RDS MySQL**<br>• Filter by eligibility, stipend, role, and package (LPA)<br>• Automated duplicate application prevention<br>• Support for custom JD uploads beyond campus drives | • Client-side parsing (**PDF, DOCX, TXT**) with zero latency<br>• **Amazon Comprehend** NLP extracts key phrases & entities<br>• Instant ATS Match Score (0–100%) against target JD<br>• Categorized matched skills & critical missing skill alerts |
+
+| 🎯 Adaptive Prep Engine | 📈 6-Stage Tracking Pipeline |
+|:---|:---|
+| • Context-aware question curation (50+ curated questions)<br>• Prioritizes questions addressing **your specific resume gaps**<br>• Covers Technical, Aptitude, Core CS & STAR Behavioral<br>• Works with both College Drives and Custom JDs | • Visual kanban-style progress for each company<br>• Stages: `Applied` ➔ `Screening` ➔ `Aptitude` ➔ `Technical` ➔ `HR` ➔ `Offer`<br>• Real-time updates with Bearer token authentication<br>• Clean, responsive student dashboard with actionable metrics |
+
+</div>
+
+---
+
+## 🏗️ System Architecture
+
+HireFlow AI is designed as a **modern, cloud-native serverless architecture** deployed in AWS `ap-south-1` (Mumbai).
+
+```mermaid
+flowchart TD
+    subgraph Client["💻 Client Layer (Browser)"]
+        SPA["React 19 + Vite SPA\n(Protected Routes, Session Storage)"]
+        Parser["Document Extractor\n(pdfjs-dist & mammoth)"]
+        SPA <--> Parser
+    end
+
+    subgraph Gateway["🌐 API Gateway Layer"]
+        APIGW["Amazon API Gateway (HTTP API)\nCORS Enabled • Bearer Token Auth"]
+    end
+
+    subgraph Compute["⚡ Serverless Backend (AWS Lambda)"]
+        MainLambda["hireflow-main Lambda\n(Python 3.12)\nAuth, Drives, Applications & Prep Engine"]
+        ResumeLambda["hireflow-resume-analyzer Lambda\n(Python 3.12)\nNLP Feature Extraction & Scoring"]
+    end
+
+    subgraph Data["🗄️ Managed Data & AI Services"]
+        RDS[("Amazon RDS\nMySQL 8.0\n(VPC Isolated)")]
+        Comprehend["Amazon Comprehend\n(detect_key_phrases\ndetect_entities)"]
+    end
+
+    SPA -- "HTTPS / Bearer Auth" --> APIGW
+    APIGW -- "/auth/*, /drives, /applications, /preparation" --> MainLambda
+    APIGW -- "/resume/analyze" --> ResumeLambda
+    MainLambda -- "PyMySQL Connection" --> RDS
+    ResumeLambda -- "boto3 NLP Call" --> Comprehend
 ```
 
 ---
 
-## Project Structure
+## 🧠 How the AI & ATS Engine Works
 
+The resume assessment is **not a black box**. It combines AWS NLP intelligence with a transparent, deterministic matching algorithm.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Student as 👨‍🎓 Student
+    participant UI as 🖥️ HireFlow UI
+    participant Lambda as ⚡ Resume Lambda
+    participant Comprehend as 🧠 Amazon Comprehend
+
+    Student->>UI: Upload Resume (PDF/DOCX) + Job Description
+    UI->>UI: Extract text client-side via pdfjs / mammoth
+    UI->>Lambda: POST /resume/analyze (Resume Text + JD Text)
+    Lambda->>Comprehend: detect_key_phrases(Resume & JD)
+    Lambda->>Comprehend: detect_entities(Resume & JD)
+    Comprehend-->>Lambda: Key Phrases & Named Entities
+    Lambda->>Lambda: Run Weighted Multi-Factor ATS Scoring Formula
+    Lambda-->>UI: ATS Score, Matched Skills, Gaps & Recommendations
+    UI->>Student: Interactive Feedback + Auto-populated Prep Plan!
 ```
-hire-flow/
-├── index.html                      # HTML entry point with SEO meta tags
-├── package.json                    # Frontend dependencies and scripts
-├── vite.config.js                  # Vite configuration
-├── schema.sql                      # RDS MySQL database schema
-├── seed.sql                        # Database seed data
-├── .env.example                    # Environment variable template
-├── .gitignore                      # Git ignore rules
-│
-├── src/                            # Frontend source code
-│   ├── main.jsx                    # React entry point
-│   ├── App.jsx                     # Router and provider setup
-│   ├── config.js                   # API base URL configuration
-│   │
-│   ├── context/
-│   │   ├── AuthContext.jsx         # Authentication state management
-│   │   └── AppContext.jsx          # Application state (analysis, applications)
-│   │
-│   ├── pages/
-│   │   ├── Login.jsx               # Login page
-│   │   ├── Dashboard.jsx           # Student dashboard
-│   │   ├── PlacementDrives.jsx     # Browse and manage drives
-│   │   ├── MyApplications.jsx      # Application pipeline tracker
-│   │   ├── ResumeAnalyzer.jsx      # Resume analysis page
-│   │   └── AIPreparation.jsx       # Adaptive preparation page
-│   │
-│   ├── components/
-│   │   ├── auth/ProtectedRoute.jsx
-│   │   ├── layout/ (AppShell, Sidebar, Header)
-│   │   ├── ui/ (Button, Modal, StatCard, EmptyState, SkillBadge)
-│   │   ├── drives/ (DriveCard, DriveDetail, DriveFilters, AddDriveModal)
-│   │   ├── applications/ (ApplicationCard, StatusPipeline)
-│   │   ├── resume/ (ResumeAnalyzer, ResumeUpload, AnalysisResult)
-│   │   └── ai/ (AIPrep, QuestionCard)
-│   │
-│   ├── services/
-│   │   ├── authService.js          # Authentication API calls
-│   │   ├── driveService.js         # Placement drives API
-│   │   ├── applicationService.js   # Applications API
-│   │   ├── resumeAnalyzer.js       # Resume analysis API
-│   │   └── aiPrep.js              # Preparation API with offline fallback
-│   │
-│   ├── lib/api.js                  # HTTP client with Bearer auth
-│   ├── hooks/ (useDrives, useApplications)
-│   ├── utils/ (documentExtractor, jdExtractor, formatters, constants)
-│   ├── data/ (aiResponses, drives, companies, applications, students)
-│   └── styles/ (global.css, variables.css)
-│
-├── backend/                        # Main Lambda function
-│   ├── lambda_function.py          # Auth, drives, applications, preparation handler
-│   ├── preparation_engine.py       # Adaptive preparation plan generator
-│   ├── question_bank.py            # Curated question bank (50+ questions)
-│   └── requirements.txt            # PyMySQL dependency
-│
-├── backend_resume/                 # Resume analyzer Lambda function
-│   ├── lambda_function.py          # Amazon Comprehend integration
-│   └── test_suite.py               # API integration tests
-│
-├── test_docs/                      # Test scripts and sample documents
-│   ├── test_auth_api.py
-│   ├── test_drives_live.py
-│   ├── test_phase3d.py
-│   ├── test_phase4b_full.py
-│   ├── test_phase4c.py
-│   ├── sample_resume.pdf/docx/txt
-│   └── sample_jd.pdf/docx/txt
-│
-└── docs/                           # Development phase documentation
-    ├── phase3-ai-resume-analyzer.md
-    └── phase4-adaptive-preparation.md
+
+### 📊 Transparent ATS Scoring Breakdown
+
+HireFlow AI calculates the match score using a weighted multi-factor formula:
+
+```text
+┌────────────────────────────────────────────────────────────────────────┐
+│  TOTAL ATS SCORE = (0.60 × SkillMatch) + (0.25 × KeyPhrase) + (0.15 × Entity) │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+| Factor | Weight | Description |
+|:-------|:------:|:------------|
+| **Skill Match** | `60%` | Exact and synonym match across an 80+ curated technical skill dictionary |
+| **Key Phrase Relevance** | `25%` | Semantic key phrases extracted by **Amazon Comprehend** common to both docs |
+| **Entity Relevance** | `15%` | Named entity overlaps (technologies, tools, organizations, credentials) |
+
+---
+
+## 🗄️ Database Architecture
+
+Structured relational model running on **Amazon RDS MySQL**:
+
+```text
+┌──────────────┐       ┌─────────────────┐       ┌──────────────────┐
+│   students   │ 1   * │  applications   │ *   1 │ placement_drives │
+├──────────────┤───────├─────────────────┤───────├──────────────────┤
+│ id (PK)      │       │ id (PK)         │       │ id (PK)          │
+│ roll_number  │       │ student_id (FK) │       │ company_id (FK)  │
+│ full_name    │       │ drive_id (FK)   │       │ role_title       │
+│ branch, cgpa │       │ current_stage   │       │ package_lpa      │
+└──────────────┘       │ status          │       │ deadline_date    │
+       │               └─────────────────┘       └──────────────────┘
+       │ 1                                                │ *
+       │ *                                                │ 1
+┌──────────────┐                                 ┌──────────────────┐
+│   sessions   │                                 │    companies     │
+├──────────────┤                                 ├──────────────────┤
+│ token (PK)   │                                 │ id (PK)          │
+│ student_id   │                                 │ name, sector     │
+└──────────────┘                                 └──────────────────┘
 ```
 
 ---
 
-## Installation and Local Development
+## 🛠️ Tech Stack & Tooling
 
-### Prerequisites
-- Node.js 18+ and npm
-- Python 3.12 (for backend reference/testing)
-- AWS account with API Gateway, Lambda, RDS MySQL, and Comprehend configured
+<table>
+  <tr>
+    <td align="center" width="25%"><strong>Frontend</strong></td>
+    <td>React 19, Vite 6, React Router DOM 7, pdfjs-dist, Mammoth, Vanilla CSS Custom Design System</td>
+  </tr>
+  <tr>
+    <td align="center" width="25%"><strong>Backend</strong></td>
+    <td>Python 3.12, AWS Lambda, Amazon API Gateway, PyMySQL, PBKDF2-SHA256 Auth</td>
+  </tr>
+  <tr>
+    <td align="center" width="25%"><strong>AWS Services</strong></td>
+    <td>Amazon Comprehend (NLP), Amazon RDS (MySQL), Amazon API Gateway, AWS IAM, Amazon CloudWatch</td>
+  </tr>
+  <tr>
+    <td align="center" width="25%"><strong>Testing & Quality</strong></td>
+    <td>Automated Python REST test suites, ESLint, Postman/curl collections</td>
+  </tr>
+</table>
 
-### Frontend Setup
+---
 
+## 🚀 Quick Start
+
+### 1. Clone the Repository
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/hireflow-ai.git
+git clone https://github.com/sahil0078sharma-oss/hireflow-ai.git
 cd hireflow-ai
+```
 
-# Install dependencies
-npm install
-
-# Create environment file
+### 2. Configure Environment
+Copy the example environment configuration:
+```bash
 cp .env.example .env
-# Edit .env and set VITE_API_BASE_URL to your API Gateway URL
+```
+Update `.env` with your API Gateway invoke URL:
+```env
+VITE_API_BASE_URL=https://your-api-id.execute-api.ap-south-1.amazonaws.com
+```
 
-# Start development server
+### 3. Run Frontend Locally
+```bash
+npm install
 npm run dev
 ```
+Open **`http://localhost:5173`** in your browser.
 
-### Environment Variables
+<details>
+<summary><strong>🔧 Backend Deployment Guide (Click to expand)</strong></summary>
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `VITE_API_BASE_URL` | API Gateway invoke URL | `https://xxxxxxxxxx.execute-api.ap-south-1.amazonaws.com` |
+<br>
 
-### Backend Deployment
-
-The backend consists of two AWS Lambda functions deployed via the AWS Console or CLI:
-
-1. **hireflow-main**: `backend/lambda_function.py` + `preparation_engine.py` + `question_bank.py`
-   - Runtime: Python 3.12
-   - Dependencies: `PyMySQL` (packaged in deployment zip)
-   - Environment variables: `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DB_PORT`
-   - VPC: Must be in the same VPC as RDS
-
-2. **hireflow-resume-analyzer**: `backend_resume/lambda_function.py`
-   - Runtime: Python 3.12
-   - Dependencies: `boto3` (included in Lambda runtime)
-   - IAM Role: Requires `comprehend:DetectKeyPhrases` and `comprehend:DetectEntities` permissions
-   - No VPC required
-
-### Database Setup
-
-```sql
--- Execute schema.sql to create tables
-source schema.sql;
-
--- Execute seed.sql to populate demo data
-source seed.sql;
-```
-
----
-
-## Testing
-
-### Manual API Tests
+#### Database Setup
+Execute the SQL files in your MySQL instance (Amazon RDS or local):
 ```bash
-# Run resume analyzer test suite
-python backend_resume/test_suite.py
-
-# Run authentication tests
-python test_docs/test_auth_api.py
-
-# Run placement drives tests
-python test_docs/test_drives_live.py
+mysql -h <rds-endpoint> -u <username> -p < schema.sql
+mysql -h <rds-endpoint> -u <username> -p < seed.sql
 ```
 
-### Frontend Linting
-```bash
-npm run lint
-```
+#### Lambda Functions
+1. **hireflow-main** (`backend/`):
+   - Package `lambda_function.py`, `preparation_engine.py`, `question_bank.py`, and `pymysql` dependencies into a zip archive.
+   - Configure environment variables: `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DB_PORT`.
+   - Attach to your VPC subnet with access to RDS.
+2. **hireflow-resume-analyzer** (`backend_resume/`):
+   - Upload `lambda_function.py`.
+   - Attach IAM policy containing `comprehend:DetectKeyPhrases` and `comprehend:DetectEntities`.
 
-### Production Build
-```bash
-npm run build
-```
-
----
-
-## Current Limitations
-
-- **Student-side only** — no college/admin portal for managing drives
-- **No student registration** — only pre-seeded accounts
-- **No password reset** functionality
-- **No session expiration** — tokens persist until manual logout
-- **Client-side file extraction only** — no S3 upload for resume persistence
-- **Custom JD analysis** stored in sessionStorage only (not persisted in RDS)
-- **Rule-based skill matching** — not semantic similarity
-- **Company/role detection** from JD uses regex heuristics, accuracy varies
+</details>
 
 ---
 
-## Future Scope
+## 🗺️ Project Roadmap
 
-- College/admin portal with role-based access control
-- Student self-registration and password management
-- Resume upload to Amazon S3 with retrieval
-- Semantic similarity using sentence embeddings for improved matching
-- Fine-tuned NER model for skill extraction
-- Persistent custom JD analysis history in RDS
-- Expanded question bank with more technologies and industries
-- Automated CI/CD testing pipeline
-- Email/push notifications for drive deadlines
-
----
-
-## Author
-
-**Sahil Sharma**
-- B.Tech Computer Science and Engineering
-- Arya College of Engineering, Jaipur
-- Training Domain: AWS Machine Learning Engineer
+- [x] **Student Authentication** (PBKDF2 password hashing & session management)
+- [x] **Placement Drive Directory** with search, filters, and dynamic drive creation
+- [x] **Application Pipeline** tracking candidates through 6 recruitment stages
+- [x] **Amazon Comprehend NLP Resume Analyzer** with key phrase & entity extraction
+- [x] **Deterministic ATS Score Calculation** (60/25/15 weighted formula)
+- [x] **Adaptive Placement Preparation Engine** prioritizing identified skill gaps
+- [x] **Custom JD Flow** supporting off-campus job preparation
+- [ ] 🔮 College / TPO Admin Dashboard for recruiter drive management
+- [ ] 🔮 Amazon S3 direct upload for persistent resume storage
+- [ ] 🔮 Embedding-based semantic similarity search for custom tech roles
+- [ ] 🔮 Automated SMS/Email interview alerts via Amazon SNS
 
 ---
 
-## License
+## 👨‍💻 Author
 
-This project is developed as part of an academic training program. All rights reserved.
+**Sahil Sharma**  
+*B.Tech in Computer Science & Engineering*  
+*Arya College of Engineering & IT, Jaipur*  
+*Specialization: AWS Machine Learning & Cloud Architecture*  
+
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-181717?style=flat&logo=github)](https://github.com/sahil0078sharma-oss)
+
+---
+
+<p align="center">
+  <sub>Built with ❤️ for graduating engineers aiming for their dream careers.</sub>
+</p>
