@@ -1,0 +1,11 @@
+Job Title: Cloud Software Engineer
+Location: Bangalore, India
+Requirements:
+- Strong proficiency in Python, REST APIs, and modern JavaScript (React).
+- Hands-on experience with AWS Cloud: AWS Lambda, Amazon S3, Amazon RDS MySQL.
+- Solid understanding of SQL database design, indexing, and query optimization.
+- Familiarity with Git, Docker containerization, and automated CI/CD pipelines.
+- Experience or interest in NLP and Machine Learning fundamentals.
+Responsibilities:
+- Build and maintain serverless cloud applications on AWS.
+- Collaborate with engineering teams to design resilient architectures.

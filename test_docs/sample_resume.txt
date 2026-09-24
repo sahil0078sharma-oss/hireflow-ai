@@ -1,0 +1,18 @@
+﻿Rahul Sharma
+Email: rahul.sharma@college.edu | Phone: +91 9876543210
+Education: B.Tech in Computer Science & Engineering, NIT Delhi (CGPA: 8.4/10)
+
+TECHNICAL SKILLS:
+- Languages: Python, JavaScript, SQL, Java
+- Cloud & DevOps: AWS (Lambda, S3, RDS, EC2), Docker, Git, Linux
+- Frameworks & Libraries: React, Node.js, FastAPI, Pandas, NumPy, Scikit-learn
+- Databases: MySQL, PostgreSQL, MongoDB
+
+PROJECTS:
+1. HireFlow AI — Campus Placement Management & Preparation Platform
+- Developed full-stack platform using React, Python AWS Lambda, Amazon RDS MySQL, and Amazon Comprehend NLP.
+- Implemented real-time resume ATS screening and skill gap analysis using AWS Natural Language Processing.
+- Designed database schemas and REST APIs handling student placement workflows.
+
+2. Machine Learning Predictive Analytics
+- Built machine learning model pipelines with Python, Scikit-learn, and Pandas.
